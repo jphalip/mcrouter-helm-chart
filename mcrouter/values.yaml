@@ -1,0 +1,12 @@
+# Third-party image as indicated in https://github.com/facebook/mcrouter/wiki/mcrouter-installation
+image: jamescarr/mcrouter
+
+replicaCount: 1
+
+resources:
+  requests:
+    memory: 256Mi
+    cpu: 100m
+
+mcrouter:
+  port: 5000
