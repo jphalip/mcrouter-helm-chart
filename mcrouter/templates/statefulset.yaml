@@ -7,6 +7,8 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
+  annotations:
+    checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 spec:
   serviceName: {{ template "fullname" . }}
   replicas: {{ .Values.replicaCount }}
@@ -42,7 +44,7 @@ spec:
         - name: MCROUTER_CONFIG_STR
           valueFrom:
             configMapKeyRef:
-              name: mcrouter-configmap
+              name: {{ template "fullname" . }}-configmap
               key: config-str
         ports:
         - name: mcrouter-port

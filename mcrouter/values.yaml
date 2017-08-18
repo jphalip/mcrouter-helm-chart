@@ -1,3 +1,6 @@
+memcached:
+  replicaCount: 3
+
 # Third-party image as indicated in https://github.com/facebook/mcrouter/wiki/mcrouter-installation
 image: jamescarr/mcrouter
 
@@ -10,3 +13,4 @@ resources:
 
 mcrouter:
   port: 5000
+  expectedMemcachedReplicas: 3
