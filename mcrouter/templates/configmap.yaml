@@ -14,7 +14,7 @@ data:
         "A": {
           "servers": [
             {{- $global := . }}
-            {{- range $i, $e := until (.Values.mcrouter.expectedMemcachedReplicas | int) }}
+            {{- range $i, $e := until (.Values.memcached.replicaCount | int) }}
             "{{ $global.Release.Name }}-memcached-{{ $i }}.{{ $global.Release.Name }}-memcached.{{ $global.Release.Namespace }}.svc.cluster.local:11211",
             {{- end }}
           ]

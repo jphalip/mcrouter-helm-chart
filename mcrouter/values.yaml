@@ -13,4 +13,3 @@ resources:
 
 mcrouter:
   port: 5000
-  expectedMemcachedReplicas: 3
