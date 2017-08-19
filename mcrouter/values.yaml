@@ -4,6 +4,10 @@ memcached:
 # Third-party image as indicated in https://github.com/facebook/mcrouter/wiki/mcrouter-installation
 image: jamescarr/mcrouter
 
+# Pass a custom JSON config, if not specified one will be generated per the number of memcached replicas
+# https://github.com/facebook/mcrouter/wiki/Config-Files
+# configFile:
+
 replicaCount: 1
 
 resources:

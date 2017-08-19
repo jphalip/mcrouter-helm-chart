@@ -39,13 +39,10 @@ spec:
         command: ["mcrouter"]
         args:
         - -p {{ .Values.mcrouter.port }}
-        - --config-str=$(MCROUTER_CONFIG_STR)
-        env:
-        - name: MCROUTER_CONFIG_STR
-          valueFrom:
-            configMapKeyRef:
-              name: {{ template "fullname" . }}-configmap
-              key: config-str
+        - --config-file=/etc/mcrouter/config.json
+        volumeMounts:
+        - name: config
+          mountPath: /etc/mcrouter
         ports:
         - name: mcrouter-port
           containerPort: {{ .Values.mcrouter.port }}
@@ -61,3 +58,7 @@ spec:
           timeoutSeconds: 1
         resources:
 {{ toYaml .Values.resources | indent 10 }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ template "fullname" . }}
