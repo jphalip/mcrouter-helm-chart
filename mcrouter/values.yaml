@@ -25,3 +25,6 @@ memcachedService:
   replicaCount: 3
   port: 11211
   namespace: "default"
+  
+## Select AntiAffinity as either hard or soft, default is hard
+AntiAffinity: "hard"
