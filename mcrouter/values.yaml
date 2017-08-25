@@ -1,9 +1,6 @@
 ## Third-party image as indicated in https://github.com/facebook/mcrouter/wiki/mcrouter-installation
 image: jamescarr/mcrouter
 
-## Replica count
-replicaCount: 1
-
 ## Configure resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
 resources:
@@ -12,7 +9,7 @@ resources:
     cpu: 100m
 
 ## Parameters for the mcrouter command
-mcrouter:
+mcrouterCommandParams:
   port: 5000
 
   ## Pass a custom JSON config, if not specified one will be generated per the number of memcached replicas
@@ -25,6 +22,18 @@ memcachedService:
   replicaCount: 3
   port: 11211
   namespace: "default"
-  
-## Select AntiAffinity as either hard or soft, default is hard
-AntiAffinity: "hard"
+
+## Pod controller. Possible values: "daemonset", "statefulset".
+controller: "daemonset"
+
+## Values for the daemonset controller
+daemonset:
+  ## Host port for the mcrouter pod
+  hostPort: 5000
+
+## Values for the statefulset controller
+statefulset:
+  ## Number of replicas
+  replicas: 1
+  ## Select AntiAffinity as either hard or soft, default is hard
+  antiAffinity: "hard"

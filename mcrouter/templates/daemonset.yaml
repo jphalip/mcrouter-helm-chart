@@ -1,45 +1,22 @@
-{{- if eq .Values.controller "statefulset" }}
-apiVersion: apps/v1beta1
-kind: StatefulSet
+{{- if eq .Values.controller "daemonset" }}
+apiVersion: extensions/v1beta1
+kind: DaemonSet
 metadata:
   name: {{ template "fullname" . }}
   labels:
     app: {{ template "fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
   annotations:
     checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 spec:
-  serviceName: {{ template "fullname" . }}
-  replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
         app: {{ template "fullname" . }}
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
         release: "{{ .Release.Name }}"
-        heritage: "{{ .Release.Service }}"
     spec:
-      affinity:
-        podAntiAffinity:
-        {{- if eq .Values.statefulset.antiAffinity "hard" }}
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - topologyKey: "kubernetes.io/hostname"
-            labelSelector:
-              matchLabels:
-                app:  {{ template "fullname" . }}
-                release: {{ .Release.Name | quote }}
-        {{- else if eq .Values.statefulset.antiAffinity "soft" }}
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 5
-            podAffinityTerm:
-            - topologyKey: "kubernetes.io/hostname"
-              labelSelector:
-                matchLabels:
-                  app:  {{ template "fullname" . }}
-                  release: {{ .Release.Name | quote }}
-        {{- end }}
       containers:
       - name: {{ template "fullname" . }}
         image: {{ .Values.image }}
@@ -54,6 +31,7 @@ spec:
         ports:
         - name: mcrouter-port
           containerPort: {{ .Values.mcrouterCommandParams.port }}
+          hostPort: {{ .Values.daemonset.hostPort }}
         livenessProbe:
           tcpSocket:
             port: mcrouter-port
@@ -70,4 +48,4 @@ spec:
       - name: config
         configMap:
           name: {{ template "fullname" . }}
-{{- end }}
+{{- end -}}

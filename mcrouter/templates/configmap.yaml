@@ -9,7 +9,7 @@ metadata:
     heritage: {{ .Release.Service }}
 data:
   config.json: |-
-{{- if .Values.mcrouter.configFile }}{{ range .Files.Lines .Values.mcrouter.configFile }}
+{{- if .Values.mcrouterCommandParams.configFile }}{{ range .Files.Lines .Values.mcrouterCommandParams.configFile }}
     {{ . }}{{ end }}
 {{- else }}
     {
