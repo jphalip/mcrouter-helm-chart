@@ -12,7 +12,7 @@ spec:
   clusterIP: None
   ports:
   - name: mcrouter-port
-    port: {{ .Values.mcrouter.port }}
+    port: {{ .Values.mcrouterCommandParams.port }}
     targetPort: mcrouter-port
   selector:
     app: {{ template "fullname" . }}
