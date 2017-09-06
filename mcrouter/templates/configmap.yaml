@@ -12,6 +12,7 @@ data:
 {{- if .Values.mcrouterCommandParams.configFile }}{{ range .Files.Lines .Values.mcrouterCommandParams.configFile }}
     {{ . }}{{ end }}
 {{- else }}
+    {{- if and .Values.memcachedService.serviceName .Values.memcachedService.replicaCount }}
     {
       "pools": {
         "A": {
@@ -25,4 +26,5 @@ data:
       },
       "route": "PoolRoute|A"
     }
+    {{- end }}
 {{- end }}

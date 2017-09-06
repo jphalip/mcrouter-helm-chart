@@ -1,0 +1,10 @@
+{{- if and (not .Values.mcrouterCommandParams.configFile) (not (and .Values.memcachedService.serviceName .Values.memcachedService.replicaCount)) }}
+###################################################################################
+####   ERROR:                                                                  ####
+####                                                                           ####
+####   You must provide either a value for "mcrouterCommandParams.configFile", ####
+####   or values for memcachedService.serviceName and                          ####
+####   memcachedService.replicaCount.                                          ####
+####   This deployment will not work properly unless you fix this issue.       ####
+###################################################################################
+{{- end }}

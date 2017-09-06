@@ -21,8 +21,8 @@ mcrouterCommandParams:
 
 ## Information about the memcached service
 memcachedService:
-  serviceName: "memcached"
-  replicaCount: 3
+  # serviceName: "memcached"
+  # replicaCount: 3
   port: 11211
   namespace: "default"
 
