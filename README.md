@@ -30,6 +30,8 @@ This chart allows the use of two different controllers: DaemonSet (default) and 
 
 If using the DaemonSet controller then each Mcrouter pods will connect to a port on their respective node' host (defaults to `5000`). Each of your application pods may then connect to the same port on their respective node. To access the node's name, you may expose that name via an environment variable with the `spec.nodeName` entry in your application's PodSpec as described in the Kubernetes [documentation](https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/).
 
+If using the StatefulSet controller then the service can be accessed by default on port `5000` on the following DNS name from within your cluster: `<release name>-mcrouter.<namespace>.svc.cluster.local`.
+
 ## Testing
 
 Install the Memcached chart:
