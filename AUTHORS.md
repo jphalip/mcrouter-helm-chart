@@ -1,2 +1,0 @@
-Julien Phalip
-Dan Isla
